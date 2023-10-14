@@ -2,8 +2,14 @@
   "include": ["**/*.ts"],
   "exclude": ["node_modules", "**/*.test.ts"],
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "ES2017",
     "outDir": "dist",
-    "moduleResolution": "Node"
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "ts-node": {
+    "esm": true
   }
 }

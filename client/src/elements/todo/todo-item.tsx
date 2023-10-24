@@ -2,6 +2,7 @@ import TodoButton from "../button/button";
 import styles from "./todo.module.css";
 
 export interface TodoItemProps {
+  _id?: string;
   title: string;
   details: string;
   created_at: string;

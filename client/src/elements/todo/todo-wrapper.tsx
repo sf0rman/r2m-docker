@@ -23,6 +23,7 @@ export default function TodoWrapper() {
       <div className={styles.grid}>
         {todos.map((todo) => (
           <TodoItem
+            key={todo._id}
             title={todo.title}
             details={todo.details}
             created_at={todo.created_at}

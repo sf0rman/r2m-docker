@@ -12,7 +12,7 @@ export const useRouter = (server: Express): Express => {
   server
     .post("/register", register)
     .post("/login", login)
-    .post("/logout", logout);
+    .post("/logout", authHandler, logout);
 
   return server;
 };

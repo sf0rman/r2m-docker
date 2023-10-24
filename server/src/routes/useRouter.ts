@@ -7,7 +7,7 @@ export const useRouter = (server: Express): Express => {
   server
     .get("/todo", authHandler, getTodos)
     .post("/todo", authHandler, createTodo)
-    .put("/todo/{id}", authHandler, updateTodo);
+    .put("/todo/:id", authHandler, updateTodo);
 
   server
     .get("/me", authHandler, getSelf)

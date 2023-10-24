@@ -8,6 +8,7 @@ import {
   err,
 } from "../middleware/errorHandler.js";
 import { ObjectId } from "mongodb";
+import { createResponse } from "../middleware/response.js";
 
 const UserDto = z
   .object({
@@ -19,16 +20,12 @@ type UserDto = z.infer<typeof UserDto>;
 
 class UserAlreadyExistsError extends AlreadyExistsError {}
 class UserAuthError extends ForbiddenError {}
-class UserNotFoundError extends NotFoundError {
-  constructor(message: string) {
-    super(message, "");
-  }
-}
+class UserNotFoundError extends NotFoundError {}
 
-const client = getClient(Collection.USER);
+const userClient = getClient(Collection.USER);
 
 export const getSelf: RequestHandler<never> = err(async (req, res, next) => {
-  const result = await client.findOne({
+  const result = await userClient.findOne({
     _id: new ObjectId(req.cookies["demo-session-cookie"]),
   });
   if (!result) {
@@ -41,31 +38,31 @@ export const getSelf: RequestHandler<never> = err(async (req, res, next) => {
   res.send(user);
 });
 
-export const register: RequestHandler<UserDto> = err(async (req, res, next) => {
+export const register: RequestHandler<never> = err(async (req, res, next) => {
   const body = UserDto.parse(req.body);
-  const result = await client.findOne({ username: body.username });
+  const result = await userClient.findOne({ username: body.username });
   if (result) {
     throw new UserAlreadyExistsError("User already exists", req.body.username);
   }
 
-  client.insertOne(body);
-  res.status(201).send({ message: "User created successfully" });
+  userClient.insertOne(body);
+  res.status(201).send(createResponse("User created successfully"));
 });
 
 export const login: RequestHandler<UserDto> = err(async (req, res, next) => {
   const body = UserDto.parse(req.body);
 
-  const result = await client.findOne(body);
+  const result = await userClient.findOne(body);
   if (result) {
     // Insecure, just for demo purposes
     res
       .cookie("demo-session-cookie", result._id.toString())
-      .send({ message: "Success" });
+      .send(createResponse("Success"));
   } else {
     throw new UserAuthError("Username and password don't match", body.username);
   }
 });
 
 export const logout: RequestHandler<never> = err((req, res, next) => {
-  res.clearCookie("demo-session-cookie").send({ message: "Success" });
+  res.clearCookie("demo-session-cookie").send(createResponse("Success"));
 });

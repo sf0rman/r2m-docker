@@ -1,14 +1,19 @@
 import { ErrorRequestHandler, RequestHandler } from "express";
 import { ZodError } from "zod";
 
+export type Optional<T> = T | undefined;
+
 class ApiError extends Error {
-  context: string | undefined;
+  context: Optional<string | Record<string, unknown>>;
   statusCode = 500;
 }
 
 export class ForbiddenError extends ApiError {
   statusCode = 401;
-  constructor(message: string, context: string) {
+  constructor(
+    message: string,
+    context?: Optional<string | Record<string, unknown>>
+  ) {
     super(message);
     this.context = context;
   }
@@ -16,7 +21,10 @@ export class ForbiddenError extends ApiError {
 
 export class AlreadyExistsError extends ApiError {
   statusCode = 409;
-  constructor(message: string, context: string) {
+  constructor(
+    message: string,
+    context?: Optional<string | Record<string, unknown>>
+  ) {
     super(message);
     this.context = context;
   }
@@ -24,7 +32,10 @@ export class AlreadyExistsError extends ApiError {
 
 export class NotFoundError extends ApiError {
   statusCode = 404;
-  constructor(message: string, context: string) {
+  constructor(
+    message: string,
+    context?: Optional<string | Record<string, unknown>>
+  ) {
     super(message);
     this.context = context;
   }
@@ -32,6 +43,17 @@ export class NotFoundError extends ApiError {
 
 export class AuthenticationError extends ApiError {
   statusCode = 401;
+}
+
+export class KnownInternalServerError extends ApiError {
+  statusCode = 500;
+  constructor(
+    message: string,
+    context?: Optional<string | Record<string, unknown>>
+  ) {
+    super(message);
+    this.context = context;
+  }
 }
 
 export const err =

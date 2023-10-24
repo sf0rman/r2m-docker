@@ -84,7 +84,7 @@ export const updateTodo: RequestHandler<
     { _id: new ObjectId(todoId.id), owner_id: userId },
     { $set: { ...todo, updated_at: new Date() } }
   );
-  console.log("RESULT", result);
+
   if (!result) {
     throw new TodoServiceError("Unable to update Todo item", {
       _id: todoId.id,

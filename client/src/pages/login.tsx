@@ -2,8 +2,8 @@ import { useForm } from "react-hook-form";
 import TodoButton from "../elements/button/button";
 import TodoInput from "../elements/input/Input";
 import useApi from "../hooks/useApi";
-import styles from "./login.module.css";
 import { useCookies } from "../provider/cookie-provider";
+import styles from "./login.module.css";
 
 interface LoginForm {
   username: string;
@@ -13,11 +13,7 @@ interface LoginForm {
 export default function Login() {
   const api = useApi();
   const cookie = useCookies();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginForm>();
+  const { register, handleSubmit } = useForm<LoginForm>();
 
   const doLogin = async (data: LoginForm) => {
     const result = await api.post("login", data);

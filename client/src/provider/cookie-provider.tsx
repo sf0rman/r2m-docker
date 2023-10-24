@@ -10,14 +10,14 @@ interface CookieContextType {
   setCookie: (name: string, value: string, options?: { path?: string }) => void;
   getCookie: (name: string) => string | undefined;
   reloadCookies: () => void;
-  removeCookie: (name: string) => void;
+  clearCookies: () => void;
 }
 
 const CookieContext = createContext<CookieContextType>({
   setCookie: () => {},
   getCookie: () => undefined,
   reloadCookies: () => {},
-  removeCookie: () => {},
+  clearCookies: () => {},
 });
 
 interface CookieProviderProps {
@@ -45,10 +45,9 @@ const CookieProvider: React.FC<CookieProviderProps> = ({ children }) => {
     return cookies[name];
   };
 
-  const removeCookie = (name: string) => {
-    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-    const { [name]: omit, ...rest } = cookies;
-    setCookies(rest);
+  const clearCookies = () => {
+    document.cookie = ``;
+    setCookies({});
   };
 
   const reloadCookies = () => {
@@ -67,7 +66,7 @@ const CookieProvider: React.FC<CookieProviderProps> = ({ children }) => {
 
   return (
     <CookieContext.Provider
-      value={{ setCookie, getCookie, removeCookie, reloadCookies }}
+      value={{ setCookie, getCookie, clearCookies, reloadCookies }}
     >
       {children}
     </CookieContext.Provider>

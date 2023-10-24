@@ -1,4 +1,5 @@
 import { ReactElement } from "react";
+import styles from "./button.module.css";
 
 interface TodoButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -12,7 +13,12 @@ export default function TodoButton({
   ...props
 }: TodoButtonProps) {
   return (
-    <button type={type} onClick={onClick} {...props}>
+    <button
+      className={[props.className, styles.button].join("")}
+      type={type}
+      onClick={onClick}
+      {...props}
+    >
       {children}
     </button>
   );

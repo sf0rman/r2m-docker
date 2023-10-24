@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Navigation from "../elements/navigation/navigation";
 import { useCookies } from "../provider/cookie-provider";
 import useApi from "../hooks/useApi";
+import TodoWrapper from "../elements/todo/todo-wrapper";
 
 interface UserDto {
   _id: string;
@@ -29,6 +30,7 @@ export default function Home() {
   return (
     <div className="home-container">
       <Navigation username={user?.username || ""} />
+      <TodoWrapper />
     </div>
   );
 }

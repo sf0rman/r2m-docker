@@ -1,7 +1,7 @@
 import { Express } from "express";
 import { createTodo, getTodos, updateTodo } from "../handler/todoHandler.js";
 import { authHandler } from "../middleware/auth.js";
-import { login, logout, register } from "../handler/userHandler.js";
+import { getSelf, login, logout, register } from "../handler/userHandler.js";
 
 export const useRouter = (server: Express): Express => {
   server
@@ -10,6 +10,7 @@ export const useRouter = (server: Express): Express => {
     .put("/todo/{id}", authHandler, updateTodo);
 
   server
+    .get("/me", authHandler, getSelf)
     .post("/register", register)
     .post("/login", login)
     .post("/logout", authHandler, logout);

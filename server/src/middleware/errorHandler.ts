@@ -22,6 +22,14 @@ export class AlreadyExistsError extends ApiError {
   }
 }
 
+export class NotFoundError extends ApiError {
+  statusCode = 404;
+  constructor(message: string, context: string) {
+    super(message);
+    this.context = context;
+  }
+}
+
 export class AuthenticationError extends ApiError {
   statusCode = 401;
 }

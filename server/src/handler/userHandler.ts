@@ -4,8 +4,10 @@ import { Collection, getClient } from "../repository/mongo.js";
 import {
   AlreadyExistsError,
   ForbiddenError,
+  NotFoundError,
   err,
 } from "../middleware/errorHandler.js";
+import { ObjectId } from "mongodb";
 
 const UserDto = z
   .object({
@@ -16,9 +18,28 @@ const UserDto = z
 type UserDto = z.infer<typeof UserDto>;
 
 class UserAlreadyExistsError extends AlreadyExistsError {}
-class UserNotFoundError extends ForbiddenError {}
+class UserAuthError extends ForbiddenError {}
+class UserNotFoundError extends NotFoundError {
+  constructor(message: string) {
+    super(message, "");
+  }
+}
 
 const client = getClient(Collection.USER);
+
+export const getSelf: RequestHandler<never> = err(async (req, res, next) => {
+  const result = await client.findOne({
+    _id: new ObjectId(req.cookies["demo-session-cookie"]),
+  });
+  if (!result) {
+    throw new UserNotFoundError("Cannot get data for user");
+  }
+
+  // Strip id and password. Should never be returned in response
+  const { _id, password, ...user } = result;
+
+  res.send(user);
+});
 
 export const register: RequestHandler<UserDto> = err(async (req, res, next) => {
   const body = UserDto.parse(req.body);
@@ -41,10 +62,7 @@ export const login: RequestHandler<UserDto> = err(async (req, res, next) => {
       .cookie("demo-session-cookie", result._id.toString())
       .send({ message: "Success" });
   } else {
-    throw new UserNotFoundError(
-      "Username and password don't match",
-      body.username
-    );
+    throw new UserAuthError("Username and password don't match", body.username);
   }
 });
 

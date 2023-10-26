@@ -24,11 +24,9 @@ export default function TodoItem({
         <p>{new Date(created_at).toDateString()}</p>
       </span>
       <p>{details}</p>
-      {complete ? (
-        "Completed"
-      ) : (
-        <TodoButton className={styles.complete}>Complete</TodoButton>
-      )}
+      <span className={styles.right}>
+        {complete ? "Completed" : <TodoButton>Complete</TodoButton>}
+      </span>
     </div>
   );
 }

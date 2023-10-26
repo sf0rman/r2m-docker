@@ -13,12 +13,7 @@ export default function TodoButton({
   ...props
 }: TodoButtonProps) {
   return (
-    <button
-      className={[props.className, styles.button].join("")}
-      type={type}
-      onClick={onClick}
-      {...props}
-    >
+    <button className={styles.button} type={type} onClick={onClick} {...props}>
       {children}
     </button>
   );

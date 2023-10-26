@@ -30,8 +30,8 @@
   gap: 1rem;
 }
 
-.complete {
-  position: absolute;
+.right {
+  align-self: flex-end;
   right: 1rem;
   bottom: 1rem;
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import TodoItem, { TodoItemProps } from "./todo-item";
 import styles from "./todo.module.css";
 import TodoButton from "../button/button";
@@ -7,19 +7,29 @@ import useApi from "../../hooks/useApi";
 export default function TodoWrapper() {
   const api = useApi();
   const [todos, setTodos] = useState<TodoItemProps[]>([]);
+  const [create, setCreate] = useState(false);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    getTodos();
+  }, []);
 
   const getTodos = async () => {
     const result = await api.get("todo");
     setTodos(result.data.data);
   };
 
-  useEffect(() => {
-    getTodos();
-  }, []);
+  const createTodo = () => {
+    console.log("it works", dialogRef.current);
+    setCreate(true);
+    dialogRef.current?.showModal();
+  };
 
   return (
     <div className={styles["todo-wrapper"]}>
-      <TodoButton className={styles.create}>Create Todo</TodoButton>
+      <span className={styles.right}>
+        <TodoButton onClick={createTodo}>Create Todo</TodoButton>
+      </span>
       <div className={styles.grid}>
         {todos.map((todo) => (
           <TodoItem

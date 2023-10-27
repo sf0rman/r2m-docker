@@ -9,3 +9,12 @@
 .button:hover {
   background-color: antiquewhite;
 }
+
+.red {
+  background-color: #ef1c09;
+  color: white;
+}
+
+.red:hover {
+  background-color: #c01404;
+}

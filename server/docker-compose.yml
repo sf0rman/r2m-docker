@@ -1,5 +1,6 @@
 services:
   mongo:
+    container_name: demo_database
     image: mongo
     restart: always
     ports:

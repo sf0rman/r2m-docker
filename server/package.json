@@ -32,8 +32,7 @@
       "./**/*.ts"
     ],
     "ignore": [
-      "node_modules",
-      "**/*.test.ts"
+      "node_modules"
     ],
     "exec": "npx ts-node ./server.ts"
   }

@@ -5,7 +5,7 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "dev": "del /q dist && nodemon",
+    "dev": "rm -rf dist && nodemon",
     "start:db": "docker compose up -d",
     "kill:db": "docker compose down -v",
     "build": "tsc"

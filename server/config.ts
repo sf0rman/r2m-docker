@@ -8,6 +8,7 @@ const Config = z.object({
   DB_URL: z.string(),
   DB_PORT: z.coerce.number(),
   DB_NAME: z.string().default("r2mdemo"),
+  APP_PORT: z.coerce.number().default(8080),
 });
 type Config = z.infer<typeof Config>;
 

@@ -2,6 +2,7 @@ import cookieParser from "cookie-parser";
 import express, { json, urlencoded } from "express";
 import { errorHandler } from "./src/middleware/errorHandler.js";
 import { useRouter } from "./src/routes/useRouter.js";
+import { cfg } from "./config.js";
 
 const server = express();
 
@@ -26,6 +27,6 @@ server.use(cookieParser());
 useRouter(server);
 server.use(errorHandler);
 
-server.listen(8080, () => {
-  console.log(`Server listening on http://localhost:${8080}`);
+server.listen(cfg.APP_PORT, () => {
+  console.log(`Server listening on http://localhost:${cfg.APP_PORT}`);
 });

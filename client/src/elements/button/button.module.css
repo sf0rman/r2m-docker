@@ -18,3 +18,12 @@
 .red:hover {
   background-color: #c01404;
 }
+
+.secondary {
+  background-color: #093bef;
+  color: white;
+}
+
+.secondary:hover {
+  background-color: #041dc0;
+}

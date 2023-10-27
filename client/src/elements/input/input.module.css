@@ -6,8 +6,14 @@
 .input {
   color: black;
   padding: 0.5rem 0.8rem;
+  border: 1 solid #ededed;
 }
 
 .error {
   color: red;
+}
+
+.textarea {
+  width: 350px;
+  height: 200px;
 }

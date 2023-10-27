@@ -16,7 +16,9 @@ export default function TodoButton({
 }: TodoButtonProps) {
   return (
     <button
-      className={`${styles.button} ${styling === "close" ? styles.red : ""}`}
+      className={`${styles.button} ${styling === "close" ? styles.red : ""} ${
+        styling == "secondary" ? styles.secondary : ""
+      }`}
       type={type}
       onClick={onClick}
       {...props}

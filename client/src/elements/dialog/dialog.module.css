@@ -1,12 +1,13 @@
 .dialog {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   gap: 2rem;
   z-index: 10;
+  border-radius: 1rem;
+}
+
+.dialog::backdrop {
+  background-color: #00000040;
 }
 
 .between {

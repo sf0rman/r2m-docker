@@ -18,7 +18,7 @@ export default function useApi() {
     }
   }, [import.meta.env.VITE_API_URL]);
 
-  const get = async (path: string, pathParams?: URLSearchParams) => {
+  const get = async (path: string) => {
     try {
       const res = await axios.get(`${api.baseUrl}/${path}`, {
         headers: api.headers,
@@ -37,7 +37,7 @@ export default function useApi() {
     }
   };
 
-  const post = async (path: string, data: Record<string, any>) => {
+  const post = async (path: string, data: Record<string, unknown>) => {
     try {
       const res = await axios.post(`${api.baseUrl}/${path}`, data, {
         headers: api.headers,

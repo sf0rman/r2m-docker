@@ -15,7 +15,6 @@ export default function TodoItem({
   details,
   complete,
   created_at,
-  updated_at,
 }: TodoItemProps) {
   return (
     <div className={styles["todo-item"]}>
